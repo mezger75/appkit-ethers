@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Web3 Contract Viewer
+
+A modern Web3 application for viewing smart contract data with wallet integration.
+
+## Technologies
+
+- [Next.js 15](https://nextjs.org) - React framework with App Router
+- [TypeScript](https://www.typescriptlang.org) - Type-safe JavaScript
+- [Ethers.js v6](https://docs.ethers.org/v6/) - Ethereum library for contract interaction
+- [Reown AppKit](https://docs.reown.com/appkit/overview) - Web3 wallet connection (formerly WalletConnect)
+- [TanStack Query](https://tanstack.com/query) - Data fetching and caching
+- [Tailwind CSS](https://tailwindcss.com) - Utility-first CSS framework
+- [shadcn/ui](https://ui.shadcn.com) - Component library
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Create `.env` file:
+
+```env
+NEXT_PUBLIC_CONTRACT_ADDRESS=0xYourContractAddress
+NEXT_PUBLIC_PROJECT_ID=your_reown_project_id
+```
+
+# Example for localhost testing:
+
+# NEXT_PUBLIC_PROJECT_ID=b56e18d47c72ab683b10814fe9495694
+
+3. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Smart Contract Integration
 
-## Learn More
+- Reads data from deployed Ethereum smart contracts
+- Displays token address, start date, and vesting interval
+- Parses uint256 timestamps to readable dates (24-hour format)
+- Converts uint32 interval seconds to human-readable format (days, hours, minutes, seconds)
 
-To learn more about Next.js, take a look at the following resources:
+### Performance Optimizations
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Query Prefetching**: Contract data prefetches on button hover for instant display
+- **Caching**: TanStack Query caches contract data to avoid redundant RPC calls
+- **Conditional Fetching**: Query only executes when modal is open and wallet is connected
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### User Experience
 
-## Deploy on Vercel
+- **Skeleton Loaders**: Animated placeholders during data loading
+- **Error Handling**: Clear error messages for failed requests
+- **Wallet Integration**: Connect with any wallet via Reown AppKit
+- **Responsive Design**: Works on desktop and mobile devices
+- **Dark Mode**: Full dark mode support
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Code Architecture
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Custom Hooks**: Reusable `useGetContractData` hook
+- **Utility Functions**: Shared parsing logic for timestamps and intervals
+- **Type Safety**: Full TypeScript coverage
+- **Component Separation**: Clean separation of fetching logic and UI components
+
+## Project Structure
+
+```
+app/
+├── components/         # React components
+│   ├── ui/            # shadcn/ui components
+│   └── ContractInfoModal.tsx
+├── hooks/             # Custom React hooks
+├── lib/               # Utility functions and constants
+│   ├── fetchContractData.ts
+│   ├── utils.ts
+│   └── constants.ts (ABI)
+├── config/            # Configuration files
+└── providers/         # React context providers
+```
+
+## Environment Variables
+
+- `NEXT_PUBLIC_CONTRACT_ADDRESS` - Your deployed contract address
+- `NEXT_PUBLIC_PROJECT_ID` - Reown (WalletConnect) project ID from [cloud.reown.com](https://cloud.reown.com)
