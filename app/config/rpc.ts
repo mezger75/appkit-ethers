@@ -1,5 +1,7 @@
 export const RPC_URL: Record<number, string> = {
-  56: 'https://binance.llamarpc.com', // BNB Chain
+  56:
+    process.env.NEXT_PUBLIC_BNB_RPC_URL ||
+    'https://go.getblock.io/cc778cdbdf5c4b028ec9456e0e6c0cf3', // BNB Chain
 };
 
 export const APPKIT_CUSTOM_RPC = { 'eip155:56': [{ url: RPC_URL[56] }] };
